@@ -24,6 +24,7 @@
   <img alt="Data Source" src="https://img.shields.io/badge/Data-OpenAlex-0f766e">
   <img alt="Ranking" src="https://img.shields.io/badge/Method-Citation%20Graph%20%2B%20PageRank-c2410c">
   <img alt="Workflow" src="https://img.shields.io/badge/Workflow-Reproducible-334155">
+  <img alt="License" src="https://img.shields.io/badge/License-MIT-16a34a">
 </p>
 
 <a id="english"></a>
@@ -33,7 +34,7 @@
 
 ## Overview
 
-**OpenSCIRanking** is an open repository for ranking journals with a transparent, data-driven workflow rather than top-down expert partitioning.
+**OpenSCIRanking** is an open repository for journal ranking that replaces top-down expert partitioning with a data-driven workflow centered on an improved PageRank-style citation graph. We treat code as the governing rule: the full data pipeline, graph construction logic, and ranking adjustments are open for inspection rather than hidden behind a black box.
 
 This repository keeps the full source code, while **computer science journals** are included only as a worked example subset for demonstrating the end-to-end pipeline.
 
@@ -46,13 +47,13 @@ This repository keeps the full source code, while **computer science journals** 
 
 ### Pain Points in Traditional Ranking Systems
 
-Many mainstream journal evaluation systems, including impact-factor-centric rankings and expert-driven partition schemes, still rely on top-down rules or simple arithmetic aggregates. In practice, that creates several structural weaknesses:
+For years, the academic community has had to rely on journal rankings built around impact factors, expert partitions, or other centralized classification schemes. In real-world use, those systems show increasingly visible weaknesses:
 
 - Vulnerable to manipulation: metrics such as average citations per paper can be gamed through journal self-citation, editorial pressure to cite the host journal, citation cartels, or aggressive review-heavy publishing strategies.
 - Opaque and centralized: many classification systems are effectively black boxes. The rules are difficult to inspect, update cycles are slow, and emerging interdisciplinary venues are often misrepresented.
 - Hard to audit or customize: commercial data pipelines and proprietary scoring logic prevent ordinary researchers from reproducing the rankings or rebuilding them for a narrower subfield such as computer networks, AI, or security.
 
-OpenSCIRanking exists to address those weaknesses with an auditable, open workflow. The core idea is simple: expose the data pipeline, expose the graph construction logic, expose the ranking rules, and let the community inspect the full chain from raw metadata to final scores.
+OpenSCIRanking is built to address those weaknesses directly. The goal is not to publish yet another opaque leaderboard, but to expose the full chain from raw metadata to final score so that researchers can audit, reproduce, and adapt the ranking logic themselves.
 
 ## Method Snapshot
 
@@ -280,7 +281,7 @@ Ignored locally:
 
 ## License
 
-This repository keeps the upstream [LICENSE](LICENSE) file already present in the GitHub repository.
+Released under the [MIT License](LICENSE).
 
 </details>
 
@@ -291,7 +292,7 @@ This repository keeps the upstream [LICENSE](LICENSE) file already present in th
 
 ## 项目简介
 
-**OpenSCIRanking** 是一个面向开源使用的期刊排序项目模板，目标是用透明、可追溯、数据驱动的方法替代传统“自上而下拍脑袋”的期刊分区逻辑。
+**OpenSCIRanking** 是一个面向开源使用的期刊排序项目模板，目标是用数据驱动的方法(改进的PageRank)替代传统“自上而下拍脑袋”的期刊分区逻辑。我们坚信“代码即法则”，致力于提供一个完全开源、数据透明、且基于底层论文引用网络自然生长的自下而上评价框架。在这个框架内，没有任何黑箱操作，接受学术共同体的检验。
 
 当前仓库完整保留了源码，而**计算机科学期刊**只是本项目当前附带的一个示例子集，用来演示从期刊名单准备到最终排名导出的完整流程。
 
@@ -304,13 +305,11 @@ This repository keeps the upstream [LICENSE](LICENSE) file already present in th
 
 ### 传统评价体系的核心痛点
 
-当前主流的期刊评价体系，无论是偏向影响因子的商业榜单，还是偏向专家划分的各类分区体系，本质上都仍然依赖“自上而下”的规则制定或简单的算术统计。在真实使用场景中，这会暴露出几个非常明显的问题：
+长期以来，学术界深受传统期刊评价体系的困扰。当前主流的期刊分区和排名（如基于 JCR 影响因子/中科院分区/新锐分区或各类专家设定的分区）在实际运行中暴露出日益严重的问题：
 
 - 容易被恶意操纵：如果指标过度依赖篇均被引、总被引或若干简单平均数，就会很容易被非学术行为绑架，例如强制作者引用本刊、堆高自引率、形成互引联盟，或者通过大量综述型文章抬高整体表现。
 - 中心化与黑盒化：很多分区或排行榜的更新逻辑并不透明，规则带有明显主观性，而且对新兴交叉领域的响应速度很慢，难以及时反映学科结构变化。
 - 缺乏开源审计能力：数据和算法长期被少数商业机构或封闭系统掌握，普通研究者很难复现其计算过程，更难针对某个具体子领域做定制化剥离和重排。
-
-OpenSCIRanking 就是为了解决这些问题而设计的。它的核心理念不是“给出一个新的黑盒榜单”，而是把数据获取、图构建、评分逻辑和后处理规则全部公开出来，让整个评价链条可以被复查、复现和修改。
 
 ## 方法概览
 
@@ -538,6 +537,6 @@ make example-final
 
 ## 许可
 
-仓库保留远端已有的 [LICENSE](LICENSE) 文件。
+本项目采用 [MIT License](LICENSE) 开源协议。
 
 </details>
