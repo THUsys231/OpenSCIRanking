@@ -14,7 +14,7 @@
 <h1 align="center">OpenSCIRanking</h1>
 
 <p align="center">
-  A reproducible, bottom-up journal ranking pipeline built on top of OpenAlex.
+  一个基于 OpenAlex 的可复现、自下而上的期刊排序流水线。
 </p>
 
 <p align="center">
@@ -24,64 +24,64 @@
   <img alt="Workflow" src="https://img.shields.io/badge/Workflow-Reproducible-334155">
 </p>
 
-## Overview
+## 项目简介
 
-**OpenSCIRanking** is an open repository for ranking journals with a transparent, data-driven workflow rather than top-down expert partitioning.
+**OpenSCIRanking** 是一个面向开源使用的期刊排序项目模板，目标是用透明、可追溯、数据驱动的方法替代传统“自上而下拍脑袋”的期刊分区逻辑。
 
-The current repository keeps the full source code and uses **computer science journals** as the worked example, from journal-list preparation all the way to final ranking export.
+当前仓库完整保留了源码，并以**计算机科学期刊**为完整示例，展示从期刊名单准备、OpenAlex 解析抓取、期刊引用图构建，到最终排名导出的全流程。
 
-## Why This Repo
+## 为什么做这个仓库
 
-- Bottom-up rather than top-down: rankings come from citation-network structure and explicit adjustment rules.
-- Reproducible workflow: users can clone the repo and rerun the pipeline on their own journal lists.
-- Transparent scoring: the method is inspectable, tunable, and easy to audit.
-- GitHub-friendly layout: code is versioned, while local data products are excluded.
+- 自下而上：基于引用网络和显式评分规则，而不是专家主观拍板
+- 可复现：克隆仓库后即可按流程重跑
+- 可解释：评分逻辑清晰，可审查、可调参
+- 适合开源：代码入库，数据产物和本地工作簿不入库
 
-## Method Snapshot
+## 方法概览
 
-The default worked-example recipe in this repository is:
+当前仓库示例使用的默认方案是：
 
-- build an inter-journal citation graph from OpenAlex works
-- drop journal self-citations
-- compute base `PageRank`
-- apply `sqrt_norm` to reduce volume bias
-- apply a mega-journal penalty to suppress extremely large venues
-- apply a mild review-heavy penalty based on average references per paper
+- 基于 OpenAlex 论文数据构建期刊间引用图
+- 去除期刊自引
+- 计算基础 `PageRank`
+- 用 `sqrt_norm` 抑制超大体量期刊的体积优势
+- 加入巨型刊惩罚项
+- 对综述较重、参考文献极长的期刊加入较轻惩罚
 
-## Repository Structure
+## 仓库结构
 
-- `inputs/`: example journal lists and seed files
-- `src/opensci_v2/`: reusable package code
-- `scripts/`: command-line entrypoints for each pipeline stage
-- `assets/`: README visual assets
-- `data/`: local fetched data and outputs, ignored by git
-- `cas_data/`: local raw spreadsheets, ignored by git
+- `inputs/`: 示例期刊名单和种子文件
+- `src/opensci_v2/`: 可复用的 Python 包代码
+- `scripts/`: 各阶段命令行脚本
+- `assets/`: README 视觉资源
+- `data/`: 本地抓取数据和输出结果，已被 git 忽略
+- `cas_data/`: 本地原始表格，已被 git 忽略
 
-## Quick Start
+## 快速开始
 
-Requirements:
+环境要求：
 
 - Python `>= 3.11`
-- network access to the OpenAlex API
-- enough local disk for Parquet outputs
+- 可访问 OpenAlex API 的网络
+- 足够的本地磁盘空间用于保存 Parquet 数据
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-or:
+或者：
 
 ```bash
 make install
 ```
 
-## Worked Example: Computer Science
+## 示例流程：计算机科学
 
-The repository already includes:
+仓库中已经包含这份示例期刊名单：
 
 - [inputs/computer_science_journals.csv](inputs/computer_science_journals.csv)
 
-### 1. Resolve journals to OpenAlex sources
+### 1. 解析期刊到 OpenAlex source
 
 ```bash
 PYTHONPATH=src python scripts/resolve_openalex_sources.py \
@@ -90,7 +90,7 @@ PYTHONPATH=src python scripts/resolve_openalex_sources.py \
   --search-fallback
 ```
 
-### 2. Build the normalized sources table
+### 2. 生成规范化的 sources 表
 
 ```bash
 PYTHONPATH=src python scripts/build_sources_table.py \
@@ -98,7 +98,7 @@ PYTHONPATH=src python scripts/build_sources_table.py \
   --output data/bronze/computer_science_sources.parquet
 ```
 
-### 3. Fetch recent works in resumable batches
+### 3. 以断点续跑方式抓取近年论文
 
 ```bash
 PYTHONPATH=src python scripts/fetch_openalex_works_batch.py \
@@ -112,7 +112,7 @@ PYTHONPATH=src python scripts/fetch_openalex_works_batch.py \
   --retry-failures
 ```
 
-### 4. Build the de-self-cited journal graph
+### 4. 构建去自引的期刊引用图
 
 ```bash
 PYTHONPATH=src python scripts/build_journal_graph.py \
@@ -121,7 +121,7 @@ PYTHONPATH=src python scripts/build_journal_graph.py \
   --drop-self-citations
 ```
 
-### 5. Compute the base PageRank
+### 5. 计算基础 PageRank
 
 ```bash
 PYTHONPATH=src python scripts/compute_pagerank.py \
@@ -129,7 +129,7 @@ PYTHONPATH=src python scripts/compute_pagerank.py \
   --output data/gold/computer_science_journal_pagerank.parquet
 ```
 
-### 6. Export the final ranking
+### 6. 导出最终排名
 
 ```bash
 PYTHONPATH=src python scripts/compute_final_ranking.py \
@@ -144,14 +144,14 @@ PYTHONPATH=src python scripts/compute_final_ranking.py \
   --review-penalty-exp 0.15
 ```
 
-Outputs:
+输出文件：
 
 - `data/gold/computer_science_journal_ranking_final.csv`
 - `data/gold/computer_science_journal_ranking_final.xlsx`
 - `data/gold/computer_science_journal_ranking_final.parquet`
 - `data/gold/computer_science_journal_ranking_final_top100.csv`
 
-## Make Targets
+## 一键命令
 
 ```bash
 make example-resolve
@@ -162,31 +162,31 @@ make example-pagerank
 make example-final
 ```
 
-For a smaller smoke test, use `inputs/journals.sample.csv` or pass `--limit` during source resolution.
+如果只想快速冒烟测试，可以改用 `inputs/journals.sample.csv`，或者在解析阶段加 `--limit`。
 
-## Design Notes
+## 设计说明
 
-- `fetch_openalex_works_batch.py` writes one shard per source and persists a CSV state file after every source.
-- `build_journal_graph.py` can explicitly remove self-citations.
-- `compute_final_ranking.py` is the GitHub-facing entrypoint for the current ranking recipe.
-- `igraph` is preferred for PageRank; the code can fall back to `networkx` where applicable.
+- `fetch_openalex_works_batch.py` 为每本期刊写一个 shard，并在每本期刊完成后更新状态文件
+- `build_journal_graph.py` 可以显式去除期刊自引
+- `compute_final_ranking.py` 是当前 GitHub 版本的最终评分入口
+- `igraph` 优先用于 PageRank；缺失时在适用场景下回退到 `networkx`
 
-## Versioning Policy
+## 版本管理策略
 
-Tracked in git:
+会纳入 git 的内容：
 
-- source code
-- configuration files
-- example input lists
-- README and visual assets
+- 源代码
+- 配置文件
+- 示例输入列表
+- README 和视觉资源
 
-Ignored locally:
+本地忽略的内容：
 
-- raw Excel workbooks
-- fetched OpenAlex datasets
-- intermediate Parquet shards
-- local ranking outputs
+- 原始 Excel 工作簿
+- 抓取得到的 OpenAlex 数据
+- 中间 Parquet shards
+- 本地排名输出
 
-## License
+## 许可
 
-This repository keeps the upstream [LICENSE](LICENSE) file already present in the GitHub repository.
+仓库保留远端已有的 [LICENSE](LICENSE) 文件。
