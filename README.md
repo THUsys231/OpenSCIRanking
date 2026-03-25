@@ -1,9 +1,9 @@
 <p align="center">
   <a href="#english">
-    <img alt="English" src="https://img.shields.io/badge/English-Home-1f6feb">
+    <img alt="English" src="https://img.shields.io/badge/English-1f6feb">
   </a>
   <a href="#中文">
-    <img alt="中文" src="https://img.shields.io/badge/%E4%B8%AD%E6%96%87-%E9%A6%96%E9%A1%B5-c2410c">
+    <img alt="中文" src="https://img.shields.io/badge/%E4%B8%AD%E6%96%87-c2410c">
   </a>
 </p>
 
